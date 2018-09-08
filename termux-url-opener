@@ -52,8 +52,9 @@ printf "$resetcol $yellow"
 echo "——————————————————————————————————————"
 printf "$resetall"
 
-myorder='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/youtube/%(uploader)s/%(playlist)s/%(playlist_index)s/%(title)s.%(ext)s -f'
-command='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/youtube/%(title)s.%(ext)s -f'
+myorder='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube/%(uploader)s/%(playlist)s/%(playlist_index)s/%(title)s.%(ext)s -f'
+command='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube/%(title)s.%(ext)s -f'
+title=$(youtube-dl --get-title $1)
 
 read option
 printf "$yellow"
@@ -113,5 +114,5 @@ youtube-dl $1
 ;;
 esac
 
-title=$(youtube-dl --get-title $1)
+
 termux-notification -t "Download Complete" -c "$title" --sound --vibrate 800 --priority high
