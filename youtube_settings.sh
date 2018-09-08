@@ -24,7 +24,6 @@ mkdir ~/bin
 echo -e "Downloading and installing termux-url-opener\n"
 curl https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener -o ~/bin/termux-url-opener
 sleep 1
-chmod ~/bin/termux-url-opener
 dos2unix ~/bin/termux-url-opener
 
 echo -e "\n"
