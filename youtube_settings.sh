@@ -3,7 +3,7 @@
 echo -e "Updating default packages\n"
 apt update && apt -y upgrade
 echo -e "Installing Required Tools"
-apt install termux-api figlet nano python ffmpeg -y
+apt install termux-api figlet python ffmpeg -y
 
 echo -e "Requesting access to storage\n"
 termux-setup-storage
