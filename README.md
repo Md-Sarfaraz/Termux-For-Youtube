@@ -2,11 +2,11 @@
 A Youtube Video Downloader For Android using Termux App with youtube-dl plugins.  
 **NOTE : _I'm just modified this Script to a more User-friendly interface._**
 
-## How Use It
+## How to Use It
 
 
 * Download Termux and Termux API from Google Play Store.  
-* Make Sure You Are Connnected To Intenet.  
+* Make Sure You Are Connected To Intenet.  
 * Open Termux App and type this line of code  
 ```
 apt update
