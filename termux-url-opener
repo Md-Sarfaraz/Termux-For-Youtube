@@ -69,7 +69,7 @@ more_option(){
 
 case $option in
 1 )
-echo "$command 140" > ~/.config/youtube-dl/config
+echo "$command 140 -x --audio-format mp3" > ~/.config/youtube-dl/config
 youtube-dl $1
 ;;
 2 )
