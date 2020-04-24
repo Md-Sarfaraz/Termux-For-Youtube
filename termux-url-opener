@@ -52,8 +52,9 @@ printf "$resetcol $yellow"
 echo "——————————————————————————————————————"
 printf "$resetall"
 
-myorder='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube/%(uploader)s/%(playlist)s/%(playlist_index)s/%(title)s.%(ext)s -f'
-command='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube/%(title)s.%(ext)s -f'
+base='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube'
+myorder='--no-warnings --newline -no-mtime -o /data/data/com.termux/files/home/storage/shared/Youtube/%(playlist)s/%(playlist_index)s/%(title)s.%(ext)s -f'
+command='$best/%(title)s.%(ext)s -f'
 title=$(youtube-dl --get-title $1)
 
 read option
@@ -69,7 +70,7 @@ more_option(){
 
 case $option in
 1 )
-echo "$command 140" > ~/.config/youtube-dl/config
+echo "$command 140 -x --audio-format mp3 --audio-quality 0" > ~/.config/youtube-dl/config
 youtube-dl $1
 ;;
 2 )
