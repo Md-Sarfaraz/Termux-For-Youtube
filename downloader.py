@@ -28,8 +28,7 @@ def my_hook(d):
         #print("Done downloading {}".format(file_tuple[1]))
         pass
     if d['status'] == 'downloading':
-        print(d['_percent_str'], d['_eta_str'], d['_speed_str'], str(
-            d['downloaded_bytes'])+'/'+str(d['_total_bytes_str']))
+        print(d['_percent_str'], d['_eta_str'], d['_speed_str'], str(d['downloaded_bytes'])+'/'+str(d['_total_bytes_str']))
         # print(d)
 
 
@@ -57,7 +56,7 @@ def get_info():
     # print(meta['formats'][1])
 
 
-def donwlaod(vidoeUrl):
+def donwlaod(videoUrl):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
             meta = ydl.extract_info(videoUrl, download=True)
@@ -70,5 +69,12 @@ def donwlaod(vidoeUrl):
     #   i+=1
 
 
-# donwlaod()
-get_info()
+def donwlaod_with_param(url,param=ydl_opts):
+    with youtube_dl.YoutubeDL(param) as ydl:
+        try:
+            meta = ydl.extract_info(url, download=True)
+        except KeyboardInterrupt:
+            print("\rCtrl + C Detected\nQuiting...")
+            exit(1)
+
+
