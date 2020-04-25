@@ -42,7 +42,6 @@ ydl_opts = {
 
 
 def get_info():
-
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
             meta = ydl.extract_info(testlink, download=False)
@@ -55,13 +54,13 @@ def get_info():
             print(str(i) + " : "+key['format_id']+"  "+key['format_note'] +
                   " \t "+key['ext']+"\tformat")
             i += 1
-    #print(meta['formats'][1])
+    # print(meta['formats'][1])
 
 
-def donwlaod():
+def donwlaod(vidoeUrl):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
-            meta = ydl.extract_info(pivatal, download=True)
+            meta = ydl.extract_info(videoUrl, download=True)
         except KeyboardInterrupt:
             print("\rCtrl + C Detected\nQuiting...")
             exit(1)
