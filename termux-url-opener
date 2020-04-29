@@ -1,0 +1,3 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+python youtube/main.py $1
