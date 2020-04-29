@@ -3,7 +3,7 @@
 echo "Updating default packages"
 apt update && apt -y upgrade
 echo "Installing Required Tools"
-apt install termux-api python ffmpeg -y
+apt install termux-api python -y
 
 echo "Requesting access to storage"
 termux-setup-storage
