@@ -15,20 +15,17 @@ yes | pip install youtube-dl
 echo "Creating the Youtube folder to download the files"
 mkdir ~/storage/shared/youtube
 
-echo "Creating youtube-dl folder for config"
-mkdir -p ~/.config/youtube-dl
-
 echo "Creating bin folder"
 mkdir ~/bin
  
-echo "Downloading and installing termux-url-opener"
-#curl https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener -o ~/bin/termux-url-opener
-
+echo "Installing files..."
 cp -r youtube ~/bin/youtube
 cp -r termux-url-opener ~/bin/
 
 sleep 2
 dos2unix ~/bin/termux-url-opener
+chmod u+x  ~/bin/termux-url-opener
+chmod u+x  ~/bin/youtube/*
 
 echo ""
 echo "Modified by : Sarfaraz"
