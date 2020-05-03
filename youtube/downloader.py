@@ -15,3 +15,6 @@ def donwlaod_with_param(url, param, download=False):
             print("\nYoutubeDLError : Check URL or Network Connection")
             exit(1)
     return meta
+
+if __name__ == "__main__":
+    pass

@@ -1,6 +1,6 @@
-from view import style as st
+from .view import style as st
 from time import sleep
-import setting
+from . import setting
 
 toMb = 1048576  # devide to get size in Mb from Bytes
 set = setting.Settings()
@@ -65,7 +65,7 @@ class MyLogger(object):
         elif '[download] Downloading playlist: ' in msg:
             print(msg.replace('[download] Downloading p', 'P'), end='')
         elif '[download] Downloading video' in msg:
-            print('\n'+msg.replace('[download] ', ''))
+            print('\n' + msg.replace('[download] ', ''))
 
     def info(self, msg):
         print("info:: ", msg)

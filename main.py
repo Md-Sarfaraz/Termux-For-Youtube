@@ -1,13 +1,15 @@
-from downloader import donwlaod_with_param
-from util import Config
+from downloader.downloader import donwlaod_with_param
+from downloader.util import Config
 import subprocess as sub
-from view import style as st, user_view
+from downloader.view import style as st, user_view
 import sys
 
 import os
+
 os.system('')
 
-link = sys.argv[1]
+# link = sys.argv[1]
+link = 'https://www.youtube.com/watch?v=33Eeuyhv_Bg'
 
 
 def main():
@@ -16,11 +18,10 @@ def main():
     user_view()
     uin = input(f"{st.yellow}Option : {st.green}")
     print(f"{st.cyan}Download Starting ...{st.yellow}")
+
     opt = select_option(int(uin))
     if uin == '1':
         ydl_opt = cf.options(opt, True)
-    elif uin == '2':
-        ydl_opt = cf.options(opt)
     else:
         ydl_opt = cf.options(opt)
     info = donwlaod_with_param(link, ydl_opt, True)
@@ -53,7 +54,7 @@ def select_option(opt):
         9: 'best[height<=2160]',
         0: 0,
     }
-    return select_dict.get(opt, -1)
+    return select_dict.get(opt, 0)
 
 
 if __name__ == "__main__":
@@ -63,6 +64,7 @@ if __name__ == "__main__":
         else:
             print(f'{st.red} Wrong Youtube URL')
             from time import sleep
+
             sleep(5)
             exit(0)
     except KeyboardInterrupt:
