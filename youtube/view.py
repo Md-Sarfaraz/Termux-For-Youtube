@@ -38,7 +38,7 @@ def header():
 
 def option_body():
     print(f"{style.cyan}   1) Audio only")
-    print("   2) Whole Playlist")
+    print("   2) Best Quality")
     print("   3) 240p Video  press 3")
     print("   4) 360p Video  press 4")
     print("   5) 480p Video  press 5")
@@ -46,7 +46,7 @@ def option_body():
     print("   7) 1080p Video press 7")
     print("   8) 2k Video    press 8")
     print("   9) 4k Video    press 9")
-    print(f"   0) More Option ({style.red} BETA {style.cyan})")
+    #print(f"   0) More Option ({style.red} BETA {style.cyan})")
     print(f"{style.reset}{style.yellow}———————————————————————————————————")
     print(f"{style.reset}{style.red} Press between 1 to 9 or Enter")
     print(f"{style.reset}{style.yellow}———————————————————————————————————{style.reset}")

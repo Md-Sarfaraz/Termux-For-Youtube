@@ -1,46 +1,32 @@
-from downloader import donwlaod_with_param
+from downloader import donwlaod_with_param, fetch_info
 from util import Config
-import subprocess as sub
+from setting import Settings as setting
 from view import style as st, user_view
 import sys
-
 import os
-os.system('')
+os.system('clear')
 
 link = sys.argv[1]
 
-
 def main():
-    global ydl_opt
-    cf = Config()
+
     user_view()
-    uin = input(f"{st.yellow}Option : {st.green}")
+    vid_option = select_option()
+    ydl_opt = get_params(vid_option)
     print(f"{st.cyan}Download Starting ...{st.yellow}")
-    opt = select_option(int(uin))
-    if uin == '1':
-        ydl_opt = cf.options(opt, True)
-    elif uin == '2':
-        ydl_opt = cf.options(opt)
-    else:
-        ydl_opt = cf.options(opt)
-    info = donwlaod_with_param(link, ydl_opt, True)
-    print('\n' + info['title'])
+    
+    fetch_info(link,ydl_opt)
+    meta = donwlaod_with_param(link, ydl_opt, True)
+    print('\n' + meta['title'])
     print(st.dcol, st.reset)
-    notify(info['title'])
 
 
-def notify(name):
-    cmd = [
-        'termux-notification',
-        '-t', 'Download Complete',
-        '-c', name,
-        '--sound', '--vibrate', '800',
-        '--priority', 'high'
-    ]
-    sub.run(cmd)
+def get_params(val):
+    return Config().options(val, True) if val == '140' else Config().options(val)
 
 
-def select_option(opt):
+def select_option(view=False):
+
     select_dict = {
         1: '140',
         2: 'best',
@@ -53,7 +39,24 @@ def select_option(opt):
         9: 'best[height<=2160]',
         0: 0,
     }
-    return select_dict.get(opt, -1)
+
+    if view:
+        os.system('clear')
+        user_view()
+
+    uin = input(f"{st.yellow}Option : {st.green}")
+    try:
+        if uin == '':
+            print('Selecting Best Quality by Default')
+            return 'best'
+        opt = int(uin)
+        if not 0 <= opt < 9:
+            return select_option(True)
+        else:
+            return select_dict.get(opt)
+    except ValueError:
+        return select_option(True)
+
 
 
 if __name__ == "__main__":

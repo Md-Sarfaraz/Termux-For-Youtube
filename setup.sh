@@ -28,4 +28,4 @@ chmod u+x  ~/bin/termux-url-opener
 chmod u+x  ~/bin/youtube/*
 
 echo ""
-echo "Modified by : Sarfaraz"
+echo "Created by : Sarfaraz"

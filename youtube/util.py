@@ -1,18 +1,25 @@
 from view import style as st
 from time import sleep
 import setting
+from notify import run_on_progress, run_on_finish
+import subprocess as sub
+
+
 
 toMb = 1048576  # devide to get size in Mb from Bytes
 set = setting.Settings()
 
 
+
 class Config:
 
     def my_hook(self, d):
+        
         if d['status'] == 'finished':
             if set.is_Audio:
                 print(
                     f"\n{st.green}Download Complete\nNow Converting to mp3 ...", end='')
+            run_on_finish(d['filename'])
 
         if d['status'] == 'downloading':
             dsize = (
@@ -20,8 +27,10 @@ class Config:
             percent = d['_percent_str']
             eta = d['_eta_str']
             speed = d['_speed_str']
+            
             print(f"\r{percent}  {eta}  {speed}  {dsize}", end='')
-            sleep(0.2)
+            run_on_progress(d['_percent_str'], eta, speed, dsize)
+            sleep(0.5)
 
         if d['status'] == 'error':
             print(d)
@@ -75,3 +84,4 @@ class MyLogger(object):
 
     def error(self, msg):
         print("error:: ", msg)
+
