@@ -17,6 +17,7 @@ mkdir ~/storage/shared/youtube
 
 echo "Creating bin folder"
 mkdir ~/bin
+mkdir ~/bin/.tmp
  
 echo "Installing files..."
 cp -r youtube ~/bin/youtube
