@@ -1,5 +1,6 @@
 import urllib.request
 import subprocess as sub
+import os
 # Settings File For Users
 
 
@@ -32,8 +33,11 @@ def temp_thumbnail(stg,remove=False):
     tmp = '/data/data/com.termux/files/home/bin/.tmp/'
 
     if remove:
-        sub.run(['rm','-rf',tmp+'*.jpg'])
-        print('\nAll Cleaned')
+        test = os.listdir(tmp)
+        for item in test:
+            if item.endswith(".jpg"):
+                os.remove(os.path.join(tmp, item))
+        print('\nAll Clear')
     else:
         url = stg.thumbnail
         urllib.request.urlretrieve(url, tmp+stg.vid_id + '.jpg')
