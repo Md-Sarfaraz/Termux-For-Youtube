@@ -13,7 +13,7 @@ def main():
     user_view()
     vid_option = select_option()
     ydl_opt = get_params(vid_option)
-    print(f"{st.cyan}Download Starting ...{st.yellow}")
+    print(f"{st.cyan}Fetching Media Informations ...{st.yellow}")
     
     fetch_info(link,ydl_opt)
     meta = donwlaod_with_param(link, ydl_opt, True)
