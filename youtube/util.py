@@ -1,15 +1,10 @@
 from view import style as st
-from time import sleep
 import setting
 from notify import run_on_progress, run_on_finish
 import subprocess as sub
 
-
-
 toMb = 1048576  # devide to get size in Mb from Bytes
 set = setting.Settings()
-
-
 
 class Config:
 
@@ -30,7 +25,6 @@ class Config:
             
             print(f"\r{percent}  {eta}  {speed}  {dsize}", end='')
             run_on_progress(d['_percent_str'], eta, speed, dsize)
-            sleep(0.5)
 
         if d['status'] == 'error':
             print(d)
