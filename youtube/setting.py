@@ -37,7 +37,7 @@ def temp_thumbnail(stg,remove=False):
         for item in test:
             if item.endswith(".jpg"):
                 os.remove(os.path.join(tmp, item))
-        print('\nAll Clear')
+        print('\nTemporary Files Deleted')
     else:
         url = stg.thumbnail
         urllib.request.urlretrieve(url, tmp+stg.vid_id + '.jpg')
