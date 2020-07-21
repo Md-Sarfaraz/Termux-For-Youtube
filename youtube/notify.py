@@ -7,14 +7,16 @@ from downloader import stg
 #stg = setting.Settings()
 
 def msg_on_progress(prog, eta, speed, size):
+    tmp = '/data/data/com.termux/files/home/bin/.tmp/'
     cmd = [
         'termux-notification', 
-        '-t', f'Progress \u2193{prog}  |  {speed}  |  {eta}',
+        '-t', f'\u2193{prog}  |  {speed}  |  {eta}',
         '--id', stg.vid_id,
         '-c', stg.title,
         '--sound', '--vibrate', '800',
         '--priority', 'high',
         '--alert-once',
+        '--image-path', tmp+stg.vid_id+'.jpg',
        ]
     sub.run(cmd)
 
@@ -27,11 +29,13 @@ def msg_on_finish(path):
         '-c', stg.title,
         '--sound', '--vibrate', '800',
         '--priority', 'high',
+        '--image-path', tmp+stg.vid_id+'.jpg',
         '--action','termux-open "'+ path+'"'
     ]
     sub.run(cmd)
     print(stg.title)
-    print(path)
+    sub.run(['rm','-rf',tmp+stg.vid_id+'.jpg'])
+
 
 
 def run_on_progress(perc,eta,speed,size):
