@@ -2,6 +2,7 @@
 import subprocess as sub
 import threading
 import time
+import setting
 from downloader import stg
 
 tmp = '/data/data/com.termux/files/home/bin/.tmp/'
