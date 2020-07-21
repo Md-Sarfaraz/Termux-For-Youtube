@@ -1,21 +1,21 @@
 import urllib.request
+import subprocess as sub
 # Settings File For Users
 
 
 class Settings(object):
 
-  
     # this the location of your internal storage. Don't Change it
     # if you change this, don't forget add a tailing slash at the end of the base_Path
     base_path = '/data/data/com.termux/files/home/storage/shared/'
 
     # Specify the Download Location for PCs.
-    # if you change this, don't forget add a tailing slash at the end of the base_Path
+    # if you change this, don't forget add a tailing slash at the end of the base_Path,
+    # and comment out the above 'base_path'
     #base_path = './../'
 
     # if you change this, don't forget add a tailing slash at the end of the save_Path
     save_Path = base_path+'Youtube/'
-
 
 
     # Don't change Below This
@@ -28,8 +28,13 @@ class Settings(object):
     fullpath = 'for quick access'
     thumbnail = 'link'
 
-def temp_thumbnail(stg):
-    url = stg.thumbnail
-    print(url)
-    urllib.request.urlretrieve(url, stg.vid_id + '.jpg')
-    print(stg.vid_id)
+def temp_thumbnail(stg,remove=False):
+    tmp = '/data/data/com.termux/files/home/bin/.tmp/'
+
+    if remove:
+        sub.run(['rm','-rf',tmp+stg.vid_id+'.jpg'])
+        print('\nAll Cleaned')
+    else:
+        url = stg.thumbnail
+        urllib.request.urlretrieve(url, tmp+stg.vid_id + '.jpg')
+
