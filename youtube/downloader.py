@@ -21,9 +21,11 @@ def donwlaod_with_param(url="", param={}, download=False,is_info=False):
                 setting.temp_thumbnail(stg)
         except KeyboardInterrupt:
             print(f"\n{st.red}Ctrl + C Detected\nQuiting...{st.reset}")
+            setting.temp_thumbnail(stg)
             exit(0)
         except YoutubeDLError:
             print(f"\n{st.red}YoutubeDLError : Check URL or Network Connection{st.reset}")
+            setting.temp_thumbnail(stg)
             exit(1)
     return meta
 
