@@ -4,10 +4,10 @@ import threading
 import time
 from downloader import stg
 
-#stg = setting.Settings()
+tmp = '/data/data/com.termux/files/home/bin/.tmp/'
 
 def msg_on_progress(prog, eta, speed, size):
-    tmp = '/data/data/com.termux/files/home/bin/.tmp/'
+    
     cmd = [
         'termux-notification', 
         '-t', f'\u2193{prog}  |  {speed}  |  {eta}',
@@ -33,9 +33,8 @@ def msg_on_finish(path):
         '--action','termux-open "'+ path+'"'
     ]
     sub.run(cmd)
-    print(stg.title)
-    sub.run(['rm','-rf',tmp+stg.vid_id+'.jpg'])
-
+    setting.temp_thumbnail(stg,True)
+   
 
 
 def run_on_progress(perc,eta,speed,size):
