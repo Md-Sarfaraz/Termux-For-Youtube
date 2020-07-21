@@ -32,7 +32,7 @@ def temp_thumbnail(stg,remove=False):
     tmp = '/data/data/com.termux/files/home/bin/.tmp/'
 
     if remove:
-        sub.run(['rm','-rf',tmp+stg.vid_id+'.jpg'])
+        sub.run(['rm','-rf',tmp+'*.jpg'])
         print('\nAll Cleaned')
     else:
         url = stg.thumbnail
