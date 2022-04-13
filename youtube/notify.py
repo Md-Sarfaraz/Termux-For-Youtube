@@ -11,9 +11,9 @@ def msg_on_progress(prog, eta, speed, size):
     
     cmd = [
         'termux-notification', 
-        '-t', f'\u2193{prog}  |  {speed}  |  {eta}',
+        '-t', stg.title,
         '--id', stg.vid_id,
-        '-c', stg.title,
+        '-c', f'\u2193{prog}  |  {speed}  |  {eta}',
         '--sound', '--vibrate', '800',
         '--priority', 'high',
         '--alert-once',
