@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-import youtube_dl
-from youtube_dl.utils import YoutubeDLError
+import yt_dlp
+from yt_dlp.utils import YoutubeDLError
 import threading
 import setting
 from view import style as st
@@ -11,7 +11,7 @@ stg = setting.Settings()
 
 def donwlaod_with_param(url="", param={}, download=False,is_info=False):
     meta = {}
-    with youtube_dl.YoutubeDL(param) as ydl:
+     with yt_dlp.YoutubeDL(param) as ydl:
         try:
             meta = ydl.extract_info(url, download=download)
             if is_info:
