@@ -10,7 +10,7 @@ termux-setup-storage
 sleep 5
 
 echo "Installing Dependencies"
-yes | pip install youtube-dl
+yes | pip install yt_dlp
 
 echo "Creating the Youtube folder to download the files"
 mkdir ~/storage/shared/youtube
