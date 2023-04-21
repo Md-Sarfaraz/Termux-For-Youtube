@@ -9,13 +9,12 @@ os.system('clear')
 link = sys.argv[1]
 
 def main():
-
     user_view()
     vid_option = select_option()
     ydl_opt = get_params(vid_option)
     print(f"{st.cyan}Fetching Media Informations ...{st.yellow}")
-    
-    fetch_info(link,ydl_opt)
+
+    fetch_info(link, ydl_opt)
     meta = donwlaod_with_param(link, ydl_opt, True)
     print('\n' + meta['title'])
     print(st.dcol, st.reset)
@@ -58,15 +57,15 @@ def select_option(view=False):
         return select_option(True)
 
 
-
 if __name__ == "__main__":
     try:
-        if 'youtu.be' in link or 'youtube.com' in link:
+        if link.startswith('https://www.youtube.com') or link.startswith('https://www.youtu.be/') or link.startswith('https://www.instagram.com/'):
             main()
         else:
-            print(f'{st.red} Wrong Youtube URL')
-            from time import sleep
-            sleep(5)
+            print(f'{st.red}Wrong URL')
+            print(f'{st.yellow}{link}')
+            input("Press Enter to Exit")
+            print(st.reset)
             exit(0)
     except KeyboardInterrupt:
         print(f"{st.red}\tInterruted By User\n\tQuiting ...")

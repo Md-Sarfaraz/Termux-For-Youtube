@@ -11,7 +11,7 @@ stg = setting.Settings()
 
 def donwlaod_with_param(url="", param={}, download=False,is_info=False):
     meta = {}
-     with yt_dlp.YoutubeDL(param) as ydl:
+    with yt_dlp.YoutubeDL(param) as ydl:
         try:
             meta = ydl.extract_info(url, download=download)
             if is_info:
