@@ -1,31 +1,51 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-echo "Updating default packages"
-apt update && apt -y upgrade
-echo "Installing Required Tools"
-apt install termux-api figlet python ffmpeg -y
+set -e
 
-echo "Requesting access to storage"
+echo "Updating Termux packages..."
+pkg update -y && pkg upgrade -y
+
+echo "Installing required packages..."
+pkg install -y \
+  termux-api \
+  figlet \
+  python \
+  ffmpeg \
+  yt-dlp \
+  curl \
+  dos2unix
+
+echo "Requesting storage permission..."
 termux-setup-storage
-sleep 5
+sleep 3
 
-echo "Installing Dependencies"
-yes | pip install youtube-dl
+if [ ! -d "$HOME/storage/shared" ]; then
+  echo "Storage permission not granted. Exiting."
+  exit 1
+fi
 
-echo "Creating the Youtube folder to download the files"
-mkdir ~/storage/shared/youtube
+echo "Creating download directory..."
+mkdir -p "$HOME/storage/shared/Youtube"
 
-echo "Creating youtube-dl folder for config"
-mkdir -p ~/.config/youtube-dl
+echo "Creating bin directory..."
+mkdir -p "$HOME/bin"
 
-echo "Creating bin folder"
-mkdir ~/bin
- 
-echo "Downloading and installing termux-url-opener"
-curl https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener -o ~/bin/termux-url-opener
-sleep 2
-dos2unix ~/bin/termux-url-opener
+if ! grep -q 'export PATH=$HOME/bin:$PATH' "$HOME/.bashrc" 2>/dev/null; then
+  echo 'export PATH=$HOME/bin:$PATH' >> "$HOME/.bashrc"
+fi
+
+echo "Installing termux-url-opener..."
+curl -fsSL \
+  https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener \
+  -o "$HOME/bin/termux-url-opener"
+
+dos2unix "$HOME/bin/termux-url-opener"
+chmod +x "$HOME/bin/termux-url-opener"
 
 echo ""
-echo "Modified by :"
+echo "Setup completed successfully."
+echo "Modified by:"
 figlet RAJ
+
+echo ""
+echo "Please restart Termux or run: source ~/.bashrc"
