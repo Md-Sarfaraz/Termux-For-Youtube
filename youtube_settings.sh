@@ -32,8 +32,9 @@ cat > ~/.config/yt-dlp/config <<EOF
 EOF
 
 echo "[+] Downloading termux-url-opener"
-curl -fsSL https://raw.githubusercontent.com/YOUR_REPO/termux-url-opener -o ~/bin/termux-url-opener
+curl -fsSL https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener -o ~/bin/termux-url-opener
 chmod +x ~/bin/termux-url-opener
 
 echo "[+] Setup complete"
 figlet RAJ
+
