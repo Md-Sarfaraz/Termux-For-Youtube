@@ -1,51 +1,39 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-set -e
+echo "[+] Updating packages"
+apt update && apt -y upgrade
 
-echo "Updating Termux packages..."
-pkg update -y && pkg upgrade -y
+echo "[+] Installing required packages"
+apt install -y python ffmpeg figlet termux-api aria2
 
-echo "Installing required packages..."
-pkg install -y \
-  termux-api \
-  figlet \
-  python \
-  ffmpeg \
-  yt-dlp \
-  curl \
-  dos2unix
+echo "[+] Installing yt-dlp"
+pip install -U yt-dlp
 
-echo "Requesting storage permission..."
+echo "[+] Requesting storage access"
 termux-setup-storage
-sleep 3
+sleep 5
 
-if [ ! -d "$HOME/storage/shared" ]; then
-  echo "Storage permission not granted. Exiting."
-  exit 1
-fi
+echo "[+] Creating directories"
+mkdir -p ~/bin
+mkdir -p ~/storage/shared/Youtube
+mkdir -p ~/.config/yt-dlp
+mkdir -p ~/.ytdlp
 
-echo "Creating download directory..."
-mkdir -p "$HOME/storage/shared/Youtube"
+echo "[+] Creating yt-dlp config (aria2 + retry + resume)"
+cat > ~/.config/yt-dlp/config <<EOF
+--no-warnings
+--newline
+--continue
+--retries infinite
+--fragment-retries infinite
+--external-downloader aria2c
+--external-downloader-args "-c -j 8 -x 8 -s 8 -k 1M --file-allocation=trunc --retry-wait=5 --max-tries=0"
+-o /data/data/com.termux/files/home/storage/shared/Youtube/%(title)s.%(ext)s
+EOF
 
-echo "Creating bin directory..."
-mkdir -p "$HOME/bin"
+echo "[+] Downloading termux-url-opener"
+curl -fsSL https://raw.githubusercontent.com/YOUR_REPO/termux-url-opener -o ~/bin/termux-url-opener
+chmod +x ~/bin/termux-url-opener
 
-if ! grep -q 'export PATH=$HOME/bin:$PATH' "$HOME/.bashrc" 2>/dev/null; then
-  echo 'export PATH=$HOME/bin:$PATH' >> "$HOME/.bashrc"
-fi
-
-echo "Installing termux-url-opener..."
-curl -fsSL \
-  https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/termux-url-opener \
-  -o "$HOME/bin/termux-url-opener"
-
-dos2unix "$HOME/bin/termux-url-opener"
-chmod +x "$HOME/bin/termux-url-opener"
-
-echo ""
-echo "Setup completed successfully."
-echo "Modified by:"
+echo "[+] Setup complete"
 figlet RAJ
-
-echo ""
-echo "Please restart Termux or run: source ~/.bashrc"
