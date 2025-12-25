@@ -10,108 +10,106 @@ resetcol='\e[49;39m'
 
 # ================= STYLES =================
 b='\e[1m'
-u='\e[4m'
 resetall='\e[0m'
 
-# ================= VARIABLES =================
+# ================= INPUT =================
 URL="$1"
+FLAG="$2"
+FLAG2="$3"
+
+# ================= PATHS =================
 DOWNLOAD_DIR="$HOME/storage/shared/Youtube"
 OUTPUT_SINGLE="$DOWNLOAD_DIR/%(title)s.%(ext)s"
 OUTPUT_PLAYLIST="$DOWNLOAD_DIR/%(playlist)s/%(playlist_index)s.%(title)s.%(ext)s"
 
+# ================= DEFAULTS =================
 FORMAT=""
-OUTPUT=""
-MODE="single"
+OUTPUT="$OUTPUT_SINGLE"
+AUDIO_OPTS=""
+DOWNLOADER=""
+DOWNLOADER_ARGS=""
+MODE="interactive"
 
-# ================= HEADER =================
-echo ""
-printf "$blue$b"
-echo "      MODIFIED BY :"
-printf "$green"
-figlet " " R A J
-printf "$blue"
-echo "    Contact Email :"
-printf "$green$b"
-echo "  sarfarazraj217@gmail.com"
-printf "$yellow"
-echo "_____________________________________"
-echo ""
+# ================= FLAG PARSING =================
+for arg in "$@"; do
+  case "$arg" in
+    --audio)
+      FORMAT="bestaudio"
+      AUDIO_OPTS="-x --audio-format mp3 --audio-quality 0"
+      MODE="cli"
+      ;;
+    --240p)  FORMAT="bestvideo[height<=240]+bestaudio/best"; MODE="cli" ;;
+    --360p)  FORMAT="bestvideo[height<=360]+bestaudio/best"; MODE="cli" ;;
+    --480p)  FORMAT="bestvideo[height<=480]+bestaudio/best"; MODE="cli" ;;
+    --720p)  FORMAT="bestvideo[height<=720]+bestaudio/best"; MODE="cli" ;;
+    --1080p) FORMAT="bestvideo[height<=1080]+bestaudio/best"; MODE="cli" ;;
+    --2k)    FORMAT="bestvideo[height<=1440]+bestaudio/best"; MODE="cli" ;;
+    --4k)    FORMAT="bestvideo[height<=2160]+bestaudio/best"; MODE="cli" ;;
+    --playlist)
+      OUTPUT="$OUTPUT_PLAYLIST"
+      MODE="cli"
+      ;;
+    --best)
+      FORMAT="bestvideo+bestaudio/best"
+      MODE="cli"
+      ;;
+    --aria2)
+      DOWNLOADER="--downloader aria2c"
+      DOWNLOADER_ARGS='--downloader-args aria2c:"-x 8 -s 8 -k 1M"'
+      ;;
+  esac
+done
 
-printf "$cyan$b"
-echo "  1) Audio only"
-echo "  2) Whole Playlist"
-echo "  3) 240p Video"
-echo "  4) 360p Video"
-echo "  5) 480p Video"
-echo "  6) 720p Video"
-echo "  7) 1080p Video"
-echo "  8) 2K (1440p) Video"
-echo "  9) 4K (2160p) Video"
-echo -e "  0) More Option ($red BETA $cyan)"
-echo ""
+# ================= INTERACTIVE MENU =================
+if [ "$MODE" = "interactive" ]; then
+  echo ""
+  printf "$blue$b"
+  echo "      MODIFIED BY :"
+  printf "$green"
+  figlet " " R A J
+  printf "$blue"
+  echo "    Contact Email :"
+  printf "$green$b"
+  echo "  sarfarazraj217@gmail.com"
+  printf "$yellow"
+  echo "_____________________________________"
+  echo ""
 
-printf "$yellow"
-echo "——————————————————————————————————————"
-printf "$red"
-echo " Press between 1 to 9 or Enter"
-printf "$yellow"
-echo "——————————————————————————————————————"
-printf "$resetall"
+  printf "$cyan$b"
+  echo "  1) Audio only"
+  echo "  2) Whole Playlist"
+  echo "  3) 240p Video"
+  echo "  4) 360p Video"
+  echo "  5) 480p Video"
+  echo "  6) 720p Video"
+  echo "  7) 1080p Video"
+  echo "  8) 2K (1440p) Video"
+  echo "  9) 4K (2160p) Video"
+  echo ""
+  printf "$yellow"
+  echo "——————————————————————————————————————"
+  printf "$red"
+  echo " Press between 1 to 9 or Enter"
+  printf "$yellow"
+  echo "——————————————————————————————————————"
+  printf "$resetall"
 
-# ================= INPUT =================
-read -r option
-echo -e "$cyan Download Started $yellow"
+  read -r option
+  echo -e "$cyan Download Started $yellow"
 
-# ================= MENU LOGIC =================
-case $option in
-  1)
-    FORMAT="bestaudio"
-    OUTPUT="$OUTPUT_SINGLE"
-    AUDIO_OPTS="-x --audio-format mp3 --audio-quality 0"
-    ;;
-  2)
-    FORMAT="bestvideo+bestaudio/best"
-    OUTPUT="$OUTPUT_PLAYLIST"
-    MODE="playlist"
-    ;;
-  3)
-    FORMAT="bestvideo[height<=240]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  4)
-    FORMAT="bestvideo[height<=360]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  5)
-    FORMAT="bestvideo[height<=480]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  6)
-    FORMAT="bestvideo[height<=720]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  7)
-    FORMAT="bestvideo[height<=1080]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  8)
-    FORMAT="bestvideo[height<=1440]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  9)
-    FORMAT="bestvideo[height<=2160]+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-  0)
-    clear
-    echo -e "$red$b This part of the project is in BETA version... $resetall"
-    exit 0
-    ;;
-  *)
-    FORMAT="bestvideo+bestaudio/best"
-    OUTPUT="$OUTPUT_SINGLE"
-    ;;
-esac
+  case $option in
+    1) FORMAT="bestaudio"; AUDIO_OPTS="-x --audio-format mp3 --audio-quality 0" ;;
+    2) FORMAT="bestvideo+bestaudio/best"; OUTPUT="$OUTPUT_PLAYLIST" ;;
+    3) FORMAT="bestvideo[height<=240]+bestaudio/best" ;;
+    4) FORMAT="bestvideo[height<=360]+bestaudio/best" ;;
+    5) FORMAT="bestvideo[height<=480]+bestaudio/best" ;;
+    6) FORMAT="bestvideo[height<=720]+bestaudio/best" ;;
+    7) FORMAT="bestvideo[height<=1080]+bestaudio/best" ;;
+    8) FORMAT="bestvideo[height<=1440]+bestaudio/best" ;;
+    9) FORMAT="bestvideo[height<=2160]+bestaudio/best" ;;
+    *) FORMAT="bestvideo+bestaudio/best" ;;
+  esac
+fi
 
 # ================= DOWNLOAD =================
 TITLE=$(yt-dlp --no-warnings --get-title "$URL" 2>/dev/null)
@@ -123,6 +121,8 @@ yt-dlp \
   -f "$FORMAT" \
   -o "$OUTPUT" \
   $AUDIO_OPTS \
+  $DOWNLOADER \
+  $DOWNLOADER_ARGS \
   "$URL"
 
 # ================= NOTIFICATION =================
