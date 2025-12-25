@@ -11,15 +11,17 @@ A Youtube Video Downloader For Android using Termux App with youtube-dl plugins.
 ```
 apt update
 
-apt install curl
+apt install curl dos2unix -y
 
-curl https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/youtube_settings.sh -o youtube.sh
+curl -fsSL https://raw.githubusercontent.com/SarfarazRLZ/Termux-For-Youtube/master/youtube_settings.sh -o youtube_settings.sh || {
+  echo "Download failed"
+  exit 1
+}
 
-chmod +x youtube.sh
+chmod +x youtube_settings.sh
+dos2unix youtube_settings.sh
 
-dos2unix youtube.sh
-
-./youtube.sh
+./youtube_settings.sh
 
 ```
 * After this, just share Youtube Videos to Termux App and press the Enter for the Best Quality Download.   
